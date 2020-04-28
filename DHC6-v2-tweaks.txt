@@ -1,0 +1,145 @@
+RWDesign's DHC6 Twin Otter Tweaks
+Aircraft Version: 2.0.2
+Tweak Version: 2.0.2.6
+
+These twin otter tweaks are for the 2.0.2 DHC Twin Otter by RWDesign
+
+Tweaks:
+2.0.2.1
+* Make autopilot ALT button behave as altitude arm allowing to intercept set altitude in IAS mode (DHC6_cockpit.obj)
+* Add autopilot button lighting as per oeverhead light dial (Custom Avionics\master\master.lua)
+* Allow autopilot altitude changes via x-plane commands refs/keybindings sim/autopilot/altitude_down|up (Custom Avionics\master\master.lua)
+* Allow ADF changes via x-plane commands refs/keybindings sim/radios/actv_adf1_hundreds|tens|ones|ones_tens_down|up (Custom Avionics\master\master.lua)
+* Add beta prop range (DHC6.acf)
+* Make throttle levers move visually through reverse/BETA/alpha (Custom Avionics\master\master.lua)
+* Fix developer log filling with "[SASL ERROR] can't load component part_aa" when no livery selected (Custom Avionics\master\master.lua)
+* Fix overhead Deicer Boots Inner/Out Wing switch (DHC6_cockpit.obj)
+* Switch to x-plane's new PT6 "Free N2 Turobrop" model, tweak Ng/Np speeds, change gauges to use N1/2_percent, tune starter(DHC6.acf & DHC6_cockpit.obj)
+* Fix bus tie switch as "normal" cross_tie should be 1, 0 otherwise
+* Disable auto update so tweaks are not overridden
+2.0.2.2
+* Fix lights and igniters to work if on  external power (Custom Avionics\master\master.lua)
+* Fix MANUAL IGNITION meaning always on, NORMAL meaning auto w/starter, ENG IGNITER are three state (L/Both/R) but INOP
+* Fix forward fuelpump being silent
+* Fix overhead flight compartment switch toggle power to cabin lights
+2.0.2.3
+* Apply previous fixes to all Twin Otter models (floats, short, tundra)
+* Tune floats for better water handling
+* Make autopilot ALT button set current indicated altitude if IAS mode is not engaged yet (allowing for hold here)
+2.0.2.4
+* Add invisible water rudder (<25knots, effective >5kt, not in real life) improving taxi with X-Plane's limitations on water
+* Move anchor under plane to control mooring location better
+* Zero out parking brakes over 25kt to avoid water landing with 'hook extended' (anchor goes down with parking_brake_ratio=0.05)
+2.0.2.5
+* Rework autopilot buttons (light level, battery status)
+* Add lighting to altitude selector, Nav, OBS, CRS knobs
+* Fix texture of panel for spelling on 3 gauges (PRECENT)
+* Fix texture of overhead ignitor switch (ON1,BOTH,ON2) - inop switch since 2.0.2.2 selection of igniter 1/2 per engine
+* Rework autopilot ALT button to allow to go into Altitude Arm, Hold, and out of hold successfully
+* Recharge battery on external power (instant recharge allows startup of engines)
+2.0.2.6
+* Make AP switch indicate correctly on cmd servos_toggle
+* Tweak behavior when setting up HDG/IAS/ALT before takeoff, servos stay off, IAS speed is set when servos engaged
+
+Installation:
+
+* Stop X-Plane
+
+* Make sure to have run XPLANEHOME\Aircraft\Extra Aircraft\DHC6-300 Twin Otter V2\STMAClient.exe once to make sure you're on version 2.0.2
+
+* Make a backup of XPLANEHOME\Aircraft\Extra Aircraft\DHC6-300 Twin Otter V2 into a folder outside of X-Plane
+
+* Download and install Python 2.7.x (64bit or applicable platform, on windows install into C:\Python27)
+
+* Download and unzip tweakotter-2.0.2.*.zip into the twin otter folder XPLANEHOME\Aircraft\Extra Aircraft\DHC6-300 Twin Otter V2
+
+* Verify you see additional files
+		DHC6-300 Twin Otter V2.0.2.*.diff
+		patch.py
+		tweak-dhc6.py
+
+* Open a command line, cd into the twin otter folder and run
+
+    python -m pip install Pillow
+		"c:\Python27\python.exe" tweak-dhc6.py
+
+	NOTE: Any updates to tweaks will reverted the previous patch - for that to work make sure to keep
+	the previous downloaded and applied V2.0.2.*.diff file in the twin otter folder!
+
+* Notice output
+		Reverting previous tweaks to DHC6 (2.0.2.a)
+		...
+		Applying latest tweaks to DHC6 (2.0.2.b)
+		successfully patched 1/n:        DHC6.acf
+		successfully patched 2/n:        DHC6_cockpit.obj
+		successfully patched ..
+		successfully patched n/n:        plugins/STMA_AutoUpdate/AutoUpdate_settings.txt
+
+	NOTE: If you notice any errors in this process then either you were not patching the original 2.0.2 Twin Otter, or any
+	modifications to it are incompatible with patching the appropriate files. Send output to author in X-Plane forum.
+
+* Start X-Plane
+
+Author:
+
+https://forums.x-plane.org/index.php?/profile/79950-nilsca/
+
+FAQ
+
+Q: Everything failed, get me out of here!
+A: Restore from the backup folder you've created
+
+Q: I can't control the beta/reverse range!
+A: Use X-Plane's beta/reverse toggle keys or try out https://forums.x-plane.org/index.php?/files/file/57160-pi_rba_throttlepy
+
+Q: My checklist says I have to turn the igniters on!
+A: As per what I could find in real world documentation and online discussions the pilot doesn't have to turn on igniters.
+   They turn on with the starter, the MANUAL/NORMAL switch simply allows to turn on permanently when in danger of blow-out
+	 and left/right igniters allow to choose between two igniters per engine - normal is BOTH.
+
+Q: The starter turns the engine but even with mixture full foward the engine does not ignite!
+A: Check fuel pump switches - currently AFT/FWD are required for left and right engine respectively.
+
+Q: My engine temp goes into red after turning the starter on.
+A: You're adding fuel too early, wait for minimum 12% N1.
+
+Q: How do I apply a new version of the path?
+A: Grab the latest and follow the instructions. If you have a previous patch applied any new changes will be applied.
+
+References:
+
+[1] PSM1-62-1A DHC-6 TWIN OTTER AIRPLANE FLIGHT MANUAL(SERIES 200) by Viking Air
+    Take-off Torque 42.5 Ng 38100/101.5% Np 2200/100%
+    Calulated Gear Ratio 17.32
+
+[2] TYPE CERTIFICATE DATA SHEET NO. A9EA
+    https://fas.org/man/dod-101/sys/ac/docs/a9ea.pdf
+
+[3] Aerosoft Twin Otter Electrical System
+	  https://www.youtube.com/watch?v=JAjuXOhfsBk
+
+[4] On Igniters
+    https://forums.x-plane.org/index.php?/forums/topic/153324-engine-starts-with-ignition-off-bug-identified/&do=findComment&comment=1452651
+
+[5] ACF values
+	P _engn/0/_type TRB_FRE_n2
+	P _engn/1/_type TRB_FRE_n2
+	P acf/_RSC_idlespeed_ENGN
+	P acf/_RSC_maxgreen_ENGN
+	P acf/_RSC_mingov_ENGN
+	P acf/_RSC_mingreen_ENGN
+	P acf/_RSC_redline_ENGN
+	P _prop/0/_des_rpm_prp
+	P _prop/1/_des_rpm_prp
+	P _prop/0/_prop_gear_rat
+	P _prop/1/_prop_gear_rat
+	P acf/_min_n1
+	P acf/_starter_max_rpm_rat
+	P acf/_starter_torque_rat
+  P _prop/0/_min_pitch
+  P _prop/1/_min_pitch
+  P acf/_beta_pitch
+  P acf/_beta_prop_EQ
+	P acf/_starter_engages_igniter_arm
+	P acf/_starter_engages_igniter_on
+	P acf/_starter_engages_ignition
