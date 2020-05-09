@@ -11,7 +11,11 @@ LOG = logging.getLogger(__name__)
 
 def read(filename):
     with io.open(filename, mode="r", encoding="utf-8") as f:
-        return f.read().splitlines(True)
+        body = f.read()
+        # diff doesn't handle a file without a trailing \n on last line correctly
+        if len(body)>0 and not body.endswith("\n"):
+            body+="\n"
+        return body.splitlines(True)
 
 def ftime(path):
     return os.stat(path).st_mtime

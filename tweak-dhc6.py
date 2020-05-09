@@ -52,7 +52,7 @@ def find_tweaks():
     version = None
     tweaks = []
     if os.path.isdir(TWEAKS_DIR):
-        tweaks = sort_versions(filter(None, map(dir2version, os.listdir(TWEAKS_DIR))))
+        tweaks = sort_versions(list(filter(None, map(dir2version, os.listdir(TWEAKS_DIR)))))
         version = read_line(TWEAK_VERSION)
     if not tweaks:
         raise RuntimeError("No tweaks in "+os.path.abspath(TWEAKS_DIR))
@@ -66,7 +66,7 @@ def revert_prev5_diff():
         match = re.match(PREV5_PATCH_PATTERN, f)
         return match.group(1) if match else None
 
-    tweaks = sort_versions(filter(None, map(file2version, os.listdir("."))))
+    tweaks = sort_versions(list(filter(None, map(file2version, os.listdir(".")))))
     if len(tweaks) > 1:
         raise RuntimeError("Found more than one pre 2.0.2.5 diff file")
     elif len(tweaks) == 1:
@@ -183,7 +183,7 @@ if __name__ == '__main__':
         patch_version(tweaks[-1]);
 
     except Exception as e:
-        logger.debug("Caught exception", exc_info=True)
+        logger.info("Caught exception", exc_info=True)
         logger.warn("%s - Aborting" % str(e))
 
 

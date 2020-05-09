@@ -1176,6 +1176,9 @@ def main(args):
         sys.exit("patch file does not exist - %s" % patchfile)
       patch = fromfile(patchfile)
 
+  if not patch:
+    sys.exit(1)
+
   if options.diffstat:
     print(patch.diffstat())
     sys.exit(0)
