@@ -28,7 +28,7 @@ AIRCRAFT_VERSION = "version.txt"
 SUPPORTED_VERSION = "Current Version: V2.02"
 
 def sort_versions(vs, key=lambda x: x):
-    vs.sort(key=lambda s: map(int, key(s).split('.')))
+    vs.sort(key=lambda s: list(map(int, key(s).split('.'))))
     return vs
 
 def read_line(file, n=1):
